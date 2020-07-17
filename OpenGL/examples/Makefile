@@ -1,2 +1,2 @@
-% : %.cpp Window.cpp Objects.cpp
-	g++ -o $@ $<  Window.cpp Objects.cpp -lGL -lglfw -lGLEW
+% : %.cpp tools/Window.cpp tools/Objects.cpp
+	g++ -o $@ $<  tools/Window.cpp tools/Objects.cpp -lGL -lglfw -lGLEW
