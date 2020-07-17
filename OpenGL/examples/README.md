@@ -5,7 +5,7 @@
 > Example **$ make square**
 
 ----
-####Run the binary
+#### Run the binary
 
     $ ./{filename}
 
