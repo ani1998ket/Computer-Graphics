@@ -1,10 +1,11 @@
-> Compile a cpp file using
+#### Compile a cpp file using
 
     $ make {filename}
 
 > Example **$ make square**
 
-> Run the binary
+----
+####Run the binary
 
     $ ./{filename}
 
