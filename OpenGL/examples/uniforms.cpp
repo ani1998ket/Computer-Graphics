@@ -2,8 +2,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <cmath>
-#include "Window.hpp"
-#include "Objects.hpp"
+
+#include "tools/Window.hpp"
+#include "tools/Objects.hpp"
 
 int main(){
 
@@ -25,8 +26,8 @@ int main(){
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE,2 * sizeof(float), 0);
     glEnableVertexAttribArray(0);
-    Shader vertex_shader(GL_VERTEX_SHADER, "shader.vs" );
-    Shader fragment_shader(GL_FRAGMENT_SHADER, "u_shader.fs" );
+    Shader vertex_shader(GL_VERTEX_SHADER, "shaders/shader.vs" );
+    Shader fragment_shader(GL_FRAGMENT_SHADER, "shaders/u_shader.fs" );
     Program program( vertex_shader, fragment_shader );
     program.use();
 
