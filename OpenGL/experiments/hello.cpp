@@ -45,7 +45,7 @@ int main(){
 }
 
 void readData( float*& data, int& size){
-    std::ifstream file("vertex.txt");
+    std::ifstream file("res/vertex.txt");
     file >> size;
     data = new float[6 * size];
     for( int i = 0; i < size * 6; i++ ){
