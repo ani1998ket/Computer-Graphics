@@ -6,22 +6,21 @@
 //t^2b⋅b+2tb⋅(A−C)+(A−C)⋅(A−C)−r2=0
 double hitsphere( const point3& center, double radius, const ray& r){
     vec3 oc = r.origin() - center;
-    auto a = dot( r.direction(), r.direction() );
-    auto b = 2.0 * dot( oc, r.direction() );
-    auto c = dot( oc, oc ) - radius * radius;
-
-    auto discriminant = b*b - 4 * a * c;
+    auto a = r.direction().length_squared();
+    auto half_b = dot( oc, r.direction() );
+    auto c = oc.length_squared() - radius * radius;
+    auto discriminant = half_b*half_b - a * c;
 
     if( discriminant < 0 ){
         return -1.0;
     }else{
-        return (-b - sqrt(discriminant) ) / (2.0 * a);
+        return (-half_b - sqrt(discriminant) ) / (a);
     }
     return discriminant > 0;  
 }
 color ray_color( const ray& r ){
-    point3 center( 0, 0, -1);
-    double radius = 0.5;
+    point3 center( 0, 0, -2);
+    double radius = 1.0;
     auto t = hitsphere( center, radius, r);
     if( t > 0.0 ){
         vec3 N = normalise(r.at( t ) - center);
