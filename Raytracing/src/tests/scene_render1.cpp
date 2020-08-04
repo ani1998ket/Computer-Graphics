@@ -4,7 +4,7 @@
 #include "color.h"
 
 //t^2b⋅b+2tb⋅(A−C)+(A−C)⋅(A−C)−r2=0
-bool hitsphere( const point3& center, double radius, const ray& r){
+double hitsphere( const point3& center, double radius, const ray& r){
     vec3 oc = r.origin() - center;
     auto a = dot( r.direction(), r.direction() );
     auto b = 2.0 * dot( oc, r.direction() );
@@ -12,14 +12,23 @@ bool hitsphere( const point3& center, double radius, const ray& r){
 
     auto discriminant = b*b - 4 * a * c;
 
+    if( discriminant < 0 ){
+        return -1.0;
+    }else{
+        return (-b - sqrt(discriminant) ) / (2.0 * a);
+    }
     return discriminant > 0;  
 }
 color ray_color( const ray& r ){
-    if( hitsphere( point3( 0, 0, -1), 0.5, r) ){
-        return color( 1, 0, 0);
+    point3 center( 0, 0, -1);
+    double radius = 0.5;
+    auto t = hitsphere( center, radius, r);
+    if( t > 0.0 ){
+        vec3 N = normalise(r.at( t ) - center);
+        return (color)(0.5 * ( N + vec3(1.0, 1.0, 1.0))); 
     }
     vec3 direction = normalise(r.direction());
-    double t = 0.5 * ( direction.y() + 1.0 );
+    t = 0.5 * ( direction.y() + 1.0 );
     return t * color(0.5, 0.7, 1.0) + ( 1 - t ) * color( 1.0, 1.0, 1.0 );
 }
 int main(){ 
