@@ -5,7 +5,6 @@
 #include "camera.h"
 
 #include <iostream>
-#include "omp.h"
 
 color ray_color( const ray& r, const hittable_list& world, int depth = 1){
     hit_record rec;
