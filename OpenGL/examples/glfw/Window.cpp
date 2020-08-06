@@ -1,4 +1,3 @@
-#include <GL/glew.h>
 #include <iostream>
 #include "Window.hpp"
 
@@ -12,17 +11,11 @@ Window::Window(int width, int height, const char* heading)
     if(!window){
 
     }
-    this->makeCurrent();
-    if( glewInit() != GLEW_OK ){
-        std::cerr << "GLEW: Initialisation Error.\n";
-    }
-
     std::cout << "Window created\n";
 }
 Window::~Window() {
     glfwDestroyWindow(window);
     std::cout << "Window destroyed\n";
-    glfwTerminate();
 }
 
 bool Window::isClosed() const {
@@ -45,7 +38,6 @@ void Window::pollEvents() const{
     glfwPollEvents();
 }
 void Window::update() const{
-    glfwSwapInterval(1);
     swapBuffers();
     pollEvents();
 }
