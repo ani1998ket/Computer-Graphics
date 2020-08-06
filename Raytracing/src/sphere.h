@@ -8,11 +8,12 @@ class sphere : public hittable{
     private:
     point3 m_center;
     double m_radius;
+    shared_ptr<material> mat_ptr;   
 
     public:
     sphere(){}
-    sphere(point3 center, double radius)
-        : m_center( center ), m_radius( radius )
+    sphere(point3 center, double radius, shared_ptr<material> m)
+        : m_center( center ), m_radius( radius ), mat_ptr(m)
     {}
 
     double radius() const {
@@ -46,6 +47,7 @@ bool sphere::hit(const ray& r, double tmin, double tmax, hit_record& hit) const 
         hit.t = root; 
         hit.p = r.at( hit.t );
         hit.set_face_normal(r, (hit.p - m_center) / m_radius);
+        hit.mat_ptr = mat_ptr;
         return true;
     } 
 

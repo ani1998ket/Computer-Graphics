@@ -10,15 +10,20 @@ class camera{
         vec3 horizontal;
         vec3 vertical;
         double fov_y;
+        double aspect;
 
     public:
-        camera(){
-            fov_y = 45.0;
+        camera(double fov_y = 45.0, double aspect_ratio = 16.0/9.0){
+            fov_y = fov_y;
+            aspect = aspect_ratio;
 
-            auto aspect_ratio = 16.0/9.0;
-            auto viewport_height = 2.0;
+            auto theta = degrees_to_radians( fov_y );
+            auto h = tan( theta / 2 );
+
+            auto viewport_height = 2.0 * h;
             auto viewport_width = aspect_ratio * viewport_height;
-            auto focal_length = 1 / std::tan( fov_y * M_PI / 360.0);
+
+            auto focal_length = 1.0;
 
             origin = point3(0, 0, 0);
             horizontal = vec3( viewport_width, 0, 0 );
