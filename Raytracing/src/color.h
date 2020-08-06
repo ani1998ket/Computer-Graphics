@@ -4,10 +4,17 @@
 #include "vec3.h"
 #include <iostream>
 
-void write_color( std::ostream& out, const color pixel_color){
-    color final_color = 255 * pixel_color;
-    out << (int)final_color.x() << ' ' 
-        << (int)final_color.y() << ' ' 
-        << (int)final_color.z() << '\n'; 
+void write_color( std::ostream& out, color pixel_color, int samples_per_pixel = 1){
+
+    auto scale = 1.0 / samples_per_pixel; 
+    pixel_color *= scale;
+
+    auto r = sqrt(pixel_color.x());
+    auto g = sqrt(pixel_color.y());
+    auto b = sqrt(pixel_color.z());
+
+    out << static_cast<int>( 256 * clamp(r, 0.0, 0.999) ) << ' '
+        << static_cast<int>( 256 * clamp(g, 0.0, 0.999) ) << ' '
+        << static_cast<int>( 256 * clamp(b, 0.0, 0.999) ) << '\n';
 }
 #endif

@@ -2,9 +2,7 @@
 #define VEC3_H
 
 #include <iostream>
-#include <cmath>
-
-using std::sqrt;
+#include "utlis.h"
 
 class vec3{
 
@@ -52,6 +50,9 @@ class vec3{
     double length_squared() const {
         return data[0]*data[0] + data[1]*data[1] + data[2]*data[2]; 
     }
+    inline static vec3 random( double min = 0, double max = 1){
+    return vec3( random_double(min, max), random_double(min, max), random_double(min, max) );
+    }
 };
 
 using point3 = vec3;
@@ -90,5 +91,28 @@ inline vec3 cross( const vec3& a, const vec3& b ){
 }
 inline vec3 normalise( const vec3 v ){
     return v / v.length();
+}
+
+vec3 random_in_unit_sphere(){
+    while( true ){
+        auto p = vec3::random(-1, 1);
+        if( p.length_squared() >= 1) continue;
+        return p;
+    }
+}
+vec3 random_unit_vector(){
+    auto a = random_double( 0, 2 * pi );
+    auto z = random_double( -1, 1);
+    auto r = sqrt( 1 - z * z);
+
+    return vec3( r * cos(a), r * sin(a) , z);
+}
+
+vec3 random_in_hemisphere( const vec3& normal){
+    vec3 in_unit_sphere = random_in_unit_sphere();
+    if( dot( normal, in_unit_sphere ) < 0.0 ){
+        return -in_unit_sphere;
+    }
+    return in_unit_sphere;
 }
 #endif
